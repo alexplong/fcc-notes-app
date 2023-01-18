@@ -4,15 +4,18 @@ import "./style.css";
 import React from "react";
 import Sidebar from "./components/Sidebar";
 import Editor from "./components/Editor";
-import { data } from "./data";
+// import { data } from "./data";
 import Split from "react-split";
 import { nanoid } from "nanoid";
 
 export default function App() {
-  const [notes, setNotes] = React.useState([]);
+  const [notes, setNotes] = React.useState(
+    JSON.parse(localStorage.getItem("storedNotes")) || []
+  );
   const [currentNoteId, setCurrentNoteId] = React.useState(
     (notes[0] && notes[0].id) || ""
   );
+  console.log(localStorage);
 
   function createNewNote() {
     const newNote = {
@@ -32,6 +35,10 @@ export default function App() {
       })
     );
   }
+
+  React.useEffect(() => {
+    localStorage.setItem("storedNotes", JSON.stringify(notes));
+  }, [notes]);
 
   function findCurrentNote() {
     return (
