@@ -3,7 +3,7 @@
 import React from "react";
 
 export default function Sidebar(props) {
-  const noteElements = props.notes.map((note, index) => (
+  const noteElements = props.notes.map((note) => (
     <div key={note.id}>
       <div
         className={`title ${
@@ -11,7 +11,17 @@ export default function Sidebar(props) {
         }`}
         onClick={() => props.setCurrentNoteId(note.id)}
       >
-        <h4 className="text-snippet">Note {index + 1}</h4>
+        <h4 className="text-snippet">
+          {JSON.stringify(note.body).split("\\n")[0]}
+        </h4>
+        <button
+          name={note.id}
+          className="delete-btn"
+          // Your onClick event handler here
+          onClick={(event) => props.deleteNote(event, note.id)}
+        >
+          <i className="gg-trash trash-icon"></i>
+        </button>
       </div>
     </div>
   ));
